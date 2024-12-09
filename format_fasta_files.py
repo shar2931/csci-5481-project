@@ -1,6 +1,6 @@
 path = 'aligned-genes/'
 outpath = 'realigned-genes/'
-files = ['BDNF', 'FOXP2', 'MBP', 'OPN1SW', 'TBXT']
+files = ['BDNF', 'FOXP2', 'MBP', 'OPN1SW', 'TBXT', 'RBFOX1']
 
 for file in files:
     sequence_names = []

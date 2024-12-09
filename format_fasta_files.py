@@ -1,4 +1,5 @@
 path = 'aligned-genes/'
+outpath = 'realigned-genes/'
 files = ['BDNF', 'FOXP2', 'MBP', 'OPN1SW', 'TBXT']
 
 for file in files:
@@ -9,14 +10,14 @@ for file in files:
         while line != '':
             if '>' in line:
                 line = line.split(' ')
-                if 'PREDICTED:' in line: sequence_names += ['>' + ' '.join(line[3:5])]
-                else: sequence_names += ['>' + ' '.join(line[2:4])]
+                if 'PREDICTED:' in line: sequence_names += ['>' + '-'.join(line[3:5])]
+                else: sequence_names += ['>' + '-'.join(line[2:4])]
                 sequences[sequence_names[-1]] = ''
             else:
                 sequences[sequence_names[-1]] += line
             line = f.readline().strip()
         
-    with open(path + file + '.fasta', 'w') as f:
+    with open(outpath + file + '.fasta', 'w') as f:
         for seq in sequences:
             f.write(seq + '\n')
             f.write(sequences[seq] + '\n')

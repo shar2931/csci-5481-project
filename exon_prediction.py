@@ -40,13 +40,27 @@ for file in files:
                 aligned_sequences[name] = line
             line = f.readline().strip()
     
+    maxNStartGaps = 0
+    maxSeqName = ""
+    for seq in aligned_sequences:
+        nGaps = 0
+        i = 0
+        while aligned_sequences[seq][i] == '-': 
+            nGaps += 1
+            i += 1
+        if nGaps > maxNStartGaps:
+            maxNStartGaps = nGaps
+            maxSeqName = seq
+
+    print(file, minSeqName, maxSeqName)
+
     with open(testpath + file + '.fasta', 'w') as f:
         minSeq = aligned_sequences[minSeqName]
-        k = 2
+        k = 1
         for seq in sequences:
             currSeq = ""
             f.write(seq + '\n')
-            for pos in range(len(minSeq)):
+            for pos in range(maxNStartGaps, len(minSeq)):
                 if minSeq[pos : pos + k] != ('-' * k): currSeq += aligned_sequences[seq][pos]
             f.write(currSeq + "\n")
 
@@ -93,4 +107,9 @@ def find_genetic_distances(infile, outfile = 'genetic-distances.txt'):
             f.write(lineToWrite)
     return distances
 
-find_genetic_distances('test-realigned-genes/BDNF.fasta')
+find_genetic_distances('test-realigned-genes/BDNF.fasta', outfile = 'genetic-distances/BDNF.txt')
+find_genetic_distances('test-realigned-genes/FOXP2.fasta', outfile = 'genetic-distances/FOXP2.txt')
+find_genetic_distances('test-realigned-genes/MBP.fasta', outfile = 'genetic-distances/MBP.txt')
+find_genetic_distances('test-realigned-genes/OPN1SW.fasta', outfile = 'genetic-distances/OPN1SW.txt')
+find_genetic_distances('test-realigned-genes/RBFOX1.fasta', outfile = 'genetic-distances/RBFOX1.txt')
+find_genetic_distances('test-realigned-genes/TBXT.fasta', outfile = 'genetic-distances/TBXT.txt')

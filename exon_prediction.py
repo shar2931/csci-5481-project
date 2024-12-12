@@ -42,12 +42,12 @@ for file in files:
     
     with open(testpath + file + '.fasta', 'w') as f:
         minSeq = aligned_sequences[minSeqName]
+        k = 2
         for seq in sequences:
-            print(seq)
             currSeq = ""
             f.write(seq + '\n')
             for pos in range(len(minSeq)):
-                if minSeq[pos] != '-': currSeq += aligned_sequences[seq][pos]
+                if minSeq[pos : pos + k] != ('-' * k): currSeq += aligned_sequences[seq][pos]
             f.write(currSeq + "\n")
 
 def find_genetic_distances(infile, outfile = 'genetic-distances.txt'):
@@ -93,4 +93,4 @@ def find_genetic_distances(infile, outfile = 'genetic-distances.txt'):
             f.write(lineToWrite)
     return distances
 
-# find_genetic_distances('realigned-genes/BDNF.fasta')
+find_genetic_distances('test-realigned-genes/BDNF.fasta')
